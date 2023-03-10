@@ -13,24 +13,22 @@ GameServer::~GameServer()
     core->getPlayers().getPlayerCheckDispatcher().removeEventHandler(this);
     core->getPlayers().getPlayerUpdateDispatcher().removeEventHandler(this);
 
-    if(vehicles)
+    if (vehicles)
         vehicles->getEventDispatcher().removeEventHandler(this);
-    
-    if(actors)
+
+    if (actors)
         actors->getEventDispatcher().removeEventHandler(this);
-    
-    if(dialogs)
-        dialogs->getEventDispatcher().removeEventHandler(this);    
+
+    if (dialogs)
+        dialogs->getEventDispatcher().removeEventHandler(this);
 
     core->getEventDispatcher().removeEventHandler(this);
 }
 
 void GameServer::onLoad(ICore *c)
 {
-    // Cache core, player pool here.
     this->core = c;
 
-    // Register this component as wanting to be informed when a player (dis)connects.
     core->getPlayers().getPlayerSpawnDispatcher().addEventHandler(this);
     core->getPlayers().getPlayerConnectDispatcher().addEventHandler(this);
     core->getPlayers().getPlayerStreamDispatcher().addEventHandler(this);
@@ -42,8 +40,6 @@ void GameServer::onLoad(ICore *c)
     core->getPlayers().getPlayerCheckDispatcher().addEventHandler(this);
     core->getPlayers().getPlayerUpdateDispatcher().addEventHandler(this);
 
-
-    // Register this component as wanting to be informed when a tick happens.
     core->getEventDispatcher().addEventHandler(this);
 
     core->printLn("GameServer component loaded");
@@ -87,7 +83,6 @@ bool GameServer::onPlayerRequestSpawn(IPlayer &player)
 
 void GameServer::onPlayerSpawn(IPlayer &player)
 {
-    
 }
 
 void GameServer::onIncomingConnection(IPlayer &player, StringView ipAddress, unsigned short port)
@@ -103,7 +98,7 @@ void GameServer::onPlayerConnect(IPlayer &player)
 void GameServer::onPlayerDisconnect(IPlayer &player, PeerDisconnectReason reason)
 {
     std::string text = std::string(player.getName()) + " (" + std::to_string(player.getID()) + ") has left the server";
-    core->getPlayers().sendClientMessageToAll(Colour::White(), text);    
+    core->getPlayers().sendClientMessageToAll(Colour::White(), text);
 }
 
 void GameServer::onPlayerClientInit(IPlayer &player)
@@ -264,22 +259,18 @@ bool GameServer::onVehicleSirenStateChange(IPlayer &player, IVehicle &vehicle, u
     return true;
 }
 
-void GameServer::onPlayerGiveDamageActor(IPlayer& player, IActor& actor, float amount, unsigned weapon, BodyPart part) 
-{ 
-
+void GameServer::onPlayerGiveDamageActor(IPlayer &player, IActor &actor, float amount, unsigned weapon, BodyPart part)
+{
 }
 
-void GameServer::onActorStreamOut(IActor& actor, IPlayer& forPlayer) 
-{ 
-
+void GameServer::onActorStreamOut(IActor &actor, IPlayer &forPlayer)
+{
 }
 
-void GameServer::onActorStreamIn(IActor& actor, IPlayer& forPlayer) 
-{ 
-
+void GameServer::onActorStreamIn(IActor &actor, IPlayer &forPlayer)
+{
 }
 
 void GameServer::onDialogResponse(IPlayer &player, int dialogId, DialogResponse response, int listItem, StringView inputText)
 {
-
 }
